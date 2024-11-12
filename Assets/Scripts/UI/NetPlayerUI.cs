@@ -57,7 +57,14 @@ public class NetPlayerUI : MonoBehaviour
     public void HideLobbyUI()
     {
         lobbyUI.SetActive(false);
-        NetPlayerMoveRPG.LocalPlayer.UnFreeze();
+        try
+        {
+            NetPlayerMoveRPG.LocalPlayer.UnFreeze();
+        }
+        catch
+        {
+
+        }
     }
 
     public void HideGameOverUI()
