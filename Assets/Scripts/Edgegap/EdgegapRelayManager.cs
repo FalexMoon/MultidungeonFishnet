@@ -1,3 +1,4 @@
+using FishNet.Managing.Scened;
 using FishNet.Transporting;
 using FishNet.Transporting.KCP.Edgegap;
 using System.Collections;
@@ -46,6 +47,8 @@ public class EdgegapRelayManager : MonoBehaviour
         kcpTransport.OnServerConnectionState += OnServerConnectionStateChange;
         kcpTransport.OnClientConnectionState += OnClientConnectionStateChange;
         RefreshPartidas();
+        EdgegapAutoConnect.apiResponse = null;
+
     }
     void OnServerConnectionStateChange(ServerConnectionStateArgs args)
     {
@@ -156,7 +159,10 @@ public class EdgegapRelayManager : MonoBehaviour
             apiResponse = JsonUtility.FromJson<ApiResponse>(response);
         }
 
-        ConnectarAPartida(apiResponse);
+        //ConnectarAPartida(apiResponse); //Si es que el UI esta en la misma escena del juego
+
+        EdgegapAutoConnect.apiResponse = apiResponse;//Ese code es si el NetworkManager esta en otra escena
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Relay");
     }
 
     void ConnectarAPartida(ApiResponse apiResponse)
@@ -235,7 +241,10 @@ public class EdgegapRelayManager : MonoBehaviour
         //Obtenemos los resultados del server creado
         ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(response);
 
-        ConnectarAPartida(apiResponse);
+        //ConnectarAPartida(apiResponse); //Si es que el UI esta en la misma escena del juego
+
+        EdgegapAutoConnect.apiResponse = apiResponse;//Ese code es si el NetworkManager esta en otra escena
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Relay");
 
     }
 
